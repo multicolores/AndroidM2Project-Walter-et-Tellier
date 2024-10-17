@@ -64,6 +64,9 @@ dependencies {
     implementation(libs.androidx.foundation.layout.android)
     implementation(libs.androidx.foundation.layout.android)
     implementation(libs.androidx.foundation.layout.android)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.foundation.layout.android)
+    implementation(libs.androidx.foundation.layout.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -82,4 +85,7 @@ dependencies {
     implementation(libs.retrofit.converter.gson)
     implementation(platform("com.google.firebase:firebase-bom:33.4.0"))
     implementation("com.google.firebase:firebase-messaging-ktx")
+    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("androidx.compose.runtime:runtime-livedata:1.4.0")
+
 }
