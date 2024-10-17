@@ -7,12 +7,13 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.myapplication.firebase.screen.FirebaseAuthScreen
 import com.example.myapplication.ui.screen.MainScreen
 import com.example.myapplication.ui.screen.YuGiOhScreen
 
 object NavigationPath {
     const val MAIN_SCREEN = "main_screen"
-    const val LIST_SCREEN = "list_screen"
+    const val AUTH_SCREEN = "auth_screen"
     const val YUGIOH_SCREEN = "yugioh_screen"
 }
 
@@ -35,11 +36,12 @@ fun NavGraphBuilder.addMainScreenNav(
 }
 
 
-fun NavGraphBuilder.addListScreenNavigation(navController: NavController) {
+fun NavGraphBuilder.addAuthScreenNavigation(navController: NavController) {
     composable(
-        route = NavigationPath.LIST_SCREEN,
+        route = NavigationPath.AUTH_SCREEN,
     ) {
        // TODO - auth sreen with check on if register or not AuthScreen(navController)
+        FirebaseAuthScreen(navController)
     }
 }
 
@@ -61,10 +63,10 @@ fun HomeNavHost(
         startDestination = NavigationPath.MAIN_SCREEN,
     ) {
         addMainScreenNav(
-            onButtonClick = { navController.navigate(NavigationPath.LIST_SCREEN) },
+            onButtonClick = { navController.navigate(NavigationPath.AUTH_SCREEN) },
             onButton2Click = { navController.navigate(NavigationPath.YUGIOH_SCREEN) }
         )
-        addListScreenNavigation(navController = navController)
+        addAuthScreenNavigation(navController = navController)
         addYuGiOhScreenNavigation(navController = navController)
     }
 }
