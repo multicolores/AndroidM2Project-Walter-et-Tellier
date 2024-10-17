@@ -8,7 +8,7 @@ import com.google.firebase.ktx.Firebase
 
 class FirebaseAuthRepository {
     private var mFirebaseAuth: FirebaseAuth = Firebase.auth
-    var mCurrentUser = MutableLiveData<FirebaseUser>()
+    var mCurrentUser = MutableLiveData<FirebaseUser?>()
     var mErrorProcess = MutableLiveData<Int>()
 
     init {
@@ -49,5 +49,6 @@ class FirebaseAuthRepository {
     fun disconnectUser() {
         mFirebaseAuth.signOut()
         mErrorProcess.postValue(5)
+        mCurrentUser.value = null
     }
 }
