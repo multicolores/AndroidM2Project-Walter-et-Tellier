@@ -1,6 +1,9 @@
 package com.example.myapplication.ui.screen
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -41,9 +44,14 @@ import com.example.myapplication.ui.viewModel.YuGiOhViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun YuGiOhScreen(navController: NavController,) {
+fun YuGiOhScreen(navController: NavController) {
     val viewModel: YuGiOhViewModel = viewModel()
     val list = viewModel.card.collectAsState(emptyList()).value
+    val context = LocalContext.current
+
+    fun showToast(context: Context, message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
 
     Scaffold(
         topBar = {
@@ -65,22 +73,24 @@ fun YuGiOhScreen(navController: NavController,) {
             ) {
                 Button(
                     onClick = { viewModel.insertNewCard() },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF333333)),
                 ) {
-                    Text("Add")
+                    Text("Add", color = Color.White)
                 }
                 Button(
                     onClick = { viewModel.deleteAllCards() },
                     colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
                 ) {
-                    Text("Delete")
+                    Text("Delete", color = Color.White)
                 }
             }
         }
 
     ) { padding ->
         LazyColumn(
-            modifier = Modifier.fillMaxSize().padding(top=70.dp, bottom=70.dp),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 70.dp, bottom = 70.dp, start = 8.dp, end = 8.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
@@ -88,94 +98,117 @@ fun YuGiOhScreen(navController: NavController,) {
                 when (item) {
                     is ItemUi.Header ->
                         OutlinedCard(
-                            modifier = Modifier.fillParentMaxWidth().then(Modifier.padding(top = 35.dp)),
-                            colors = CardDefaults.cardColors().copy(containerColor = Color.Black)
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 35.dp),
+                            colors = CardDefaults.cardColors(containerColor = Color(0xFF1E1E1E)),
+                            shape = MaterialTheme.shapes.medium,
+                            elevation = CardDefaults.outlinedCardElevation(8.dp)
                         ) {
                             Column(
                                 modifier = Modifier
-                                    .fillParentMaxWidth()
-                                    .padding(8.dp),
+                                    .fillMaxWidth()
+                                    .padding(12.dp),
                                 horizontalAlignment = Alignment.CenterHorizontally,
                             ) {
                                 Text(
                                     text = item.type,
-                                    style = MaterialTheme.typography.displaySmall,
+                                    style = MaterialTheme.typography.titleLarge,
                                     color = Color.White,
+                                    fontWeight = FontWeight.Bold
                                 )
                             }
                         }
 
                     is ItemUi.YuGiOhObject -> {
-                        val painter = rememberAsyncImagePainter(
-                            ImageRequest
-                                .Builder(LocalContext.current)
-                                .data(data = item.url)
-                                .build()
-                        )
-
-                        Image(
-                            //modifier = Modifier.animateItem()
-                            modifier = Modifier.size(300.dp),
-                            painter = painter,
-                            contentDescription = "Image d'une carte YUGIOH !!",
-                        )
-
-                        Text (
-                            text = "${item.title}",
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 25.sp
-                        )
-                        Text(
-                            text = "Type:  ${item.type}",
-                            modifier = Modifier.padding(bottom = 16.dp),
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 15.sp
-                        )
-
-                        if (item.level != 0) {
-                            Text(
-                                text = "Niveau: ${item.level}",
-                                color = Color.Black,
-                                fontSize = 18.sp
-                            )
-                        }
-
-                        if (item.atk != 0 || item.def != 0) {
-                            Text(
-                                text = "ATK: ${item.atk} / DEF: ${item.def}",
-                                color = Color.Black,
-                                fontSize = 18.sp
-                            )
-                        }
-
-                        Text(
-                            text = "Timestamp: ${item.current_timestamp}",
-                            color = Color.Gray,
-                            fontSize = 12.sp
-                        )
-                    }
-
-
-                    is ItemUi.Footer ->
                         OutlinedCard(
-                            colors = CardDefaults.cardColors().copy(containerColor = Color.DarkGray)
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(8.dp)
+                                .clickable {
+                                    showToast(context, "${item.title} ATK: ${item.atk} / DEF: ${item.def}")
+                                },
+                            colors = CardDefaults.cardColors(containerColor = Color(0xFFF5F5F5)),
+                            shape = MaterialTheme.shapes.large,
+                            elevation = CardDefaults.outlinedCardElevation(6.dp)
                         ) {
                             Column(
                                 modifier = Modifier
-                                    .padding(8.dp),
+                                    .fillMaxWidth()
+                                    .padding(16.dp),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.spacedBy(8.dp)
+                            ) {
+                                val painter = rememberAsyncImagePainter(
+                                    ImageRequest
+                                        .Builder(LocalContext.current)
+                                        .data(data = item.url)
+                                        .build()
+                                )
+
+                                Image(
+                                    modifier = Modifier.size(250.dp),
+                                    painter = painter,
+                                    contentDescription = "Image d'une carte YuGiOh",
+                                )
+
+                                Text(
+                                    text = item.title,
+                                    color = Color(0xFF333333),
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 24.sp
+                                )
+                                Text(
+                                    text = "Type: ${item.type}",
+                                    color = Color(0xFF555555),
+                                    fontWeight = FontWeight.Medium,
+                                    fontSize = 16.sp
+                                )
+
+                                if (item.level != 0) {
+                                    Text(
+                                        text = "Niveau: ${item.level}",
+                                        color = Color(0xFF555555),
+                                        fontSize = 16.sp
+                                    )
+                                }
+
+                                if (item.atk != 0 || item.def != 0) {
+                                    Text(
+                                        text = "ATK: ${item.atk} / DEF: ${item.def}",
+                                        color = Color(0xFF555555),
+                                        fontSize = 16.sp
+                                    )
+                                }
+
+                                Text(
+                                    text = "Ajouté le: ${item.current_timestamp}",
+                                    color = Color.Gray,
+                                    fontSize = 12.sp
+                                )
+                            }
+                        }
+                    }
+
+                    is ItemUi.Footer ->
+                        OutlinedCard(
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(containerColor = Color(0xFF333333)),
+                            shape = MaterialTheme.shapes.medium,
+                            elevation = CardDefaults.outlinedCardElevation(8.dp)
+                        ) {
+                            Column(
+                                modifier = Modifier
+                                    .padding(12.dp),
                                 horizontalAlignment = Alignment.CenterHorizontally,
                             ) {
                                 Text(
-                                    text = "Nombre total de set: ${item.numberOfElements}",
+                                    text = "Nombre total de cartes: ${item.numberOfElements}",
                                     style = MaterialTheme.typography.titleMedium,
                                     color = Color.White,
                                 )
                             }
                         }
-
-
                 }
             }
         }
