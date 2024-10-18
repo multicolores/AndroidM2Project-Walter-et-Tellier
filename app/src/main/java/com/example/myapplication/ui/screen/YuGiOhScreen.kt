@@ -39,6 +39,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
+import com.example.myapplication.R
 import com.example.myapplication.ui.model.ItemUi
 import com.example.myapplication.ui.viewModel.YuGiOhViewModel
 
@@ -56,7 +57,7 @@ fun YuGiOhScreen(navController: NavController) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Cartes YuGiOh") },
+                title = { Text(context.getString(R.string.cards_title)) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
@@ -75,13 +76,13 @@ fun YuGiOhScreen(navController: NavController) {
                     onClick = { viewModel.insertNewCard() },
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF333333)),
                 ) {
-                    Text("Add", color = Color.White)
+                    Text(context.getString(R.string.add), color = Color.White)
                 }
                 Button(
                     onClick = { viewModel.deleteAllCards() },
                     colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
                 ) {
-                    Text("Delete", color = Color.White)
+                    Text(context.getString(R.string.remove), color = Color.White)
                 }
             }
         }
@@ -167,7 +168,7 @@ fun YuGiOhScreen(navController: NavController) {
 
                                 if (item.level != 0) {
                                     Text(
-                                        text = "Niveau: ${item.level}",
+                                        text = context.getString(R.string.level) + ": ${item.level}",
                                         color = Color(0xFF555555),
                                         fontSize = 16.sp
                                     )
@@ -182,7 +183,7 @@ fun YuGiOhScreen(navController: NavController) {
                                 }
 
                                 Text(
-                                    text = "Ajouté le: ${item.current_timestamp}",
+                                    text =  context.getString(R.string.added_date) + ": ${item.current_timestamp}",
                                     color = Color.Gray,
                                     fontSize = 12.sp
                                 )
@@ -203,7 +204,7 @@ fun YuGiOhScreen(navController: NavController) {
                                 horizontalAlignment = Alignment.CenterHorizontally,
                             ) {
                                 Text(
-                                    text = "Nombre total de cartes: ${item.numberOfElements}",
+                                    text =  context.getString(R.string.total_number_of_cards) +": ${item.numberOfElements}",
                                     style = MaterialTheme.typography.titleMedium,
                                     color = Color.White,
                                 )

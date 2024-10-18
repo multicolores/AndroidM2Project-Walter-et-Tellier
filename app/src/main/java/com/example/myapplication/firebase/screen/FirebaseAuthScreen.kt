@@ -21,6 +21,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.myapplication.R
 import com.example.myapplication.firebase.viewmodel.FirebaseAuthViewModel
 
 @Composable
@@ -58,7 +59,7 @@ fun FirebaseAuthScreen(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Authentication",
+            text = context.getString(R.string.authentification_title),
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.padding(bottom = 24.dp) // Espace avant le titre
         )
@@ -74,7 +75,7 @@ fun FirebaseAuthScreen(navController: NavController) {
         TextField(
             value = password,
             onValueChange = { password = it },
-            label = { Text("Password") },
+            label = { Text(context.getString(R.string.password),) },
             modifier = Modifier.fillMaxWidth(),
             visualTransformation = PasswordVisualTransformation(),
         )
@@ -89,12 +90,12 @@ fun FirebaseAuthScreen(navController: NavController) {
                     if (checkConformityFields(email, password)) {
                         mViewModel.registerNewUser(email, password)
                     } else {
-                        showToast(context, "Au moins 1 champ est vide")
+                        showToast(context, context.getString(R.string.field_empty_error),)
                     }
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Black))
             {
-                Text("Register")
+                Text(context.getString(R.string.register_button),)
             }
 
             Button(
@@ -102,12 +103,12 @@ fun FirebaseAuthScreen(navController: NavController) {
                     if (checkConformityFields(email, password)) {
                         mViewModel.loginUser(email, password)
                     } else {
-                        showToast(context, "Au moins 1 champ est vide")
+                        showToast(context, context.getString(R.string.field_empty_error),)
                     }
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Black))
             {
-                Text("Login")
+                Text(context.getString(R.string.log_in_button),)
             }
 
             Button(
@@ -116,7 +117,7 @@ fun FirebaseAuthScreen(navController: NavController) {
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
             ) {
-                Text("Disconnect")
+                Text(context.getString(R.string.logout_button),)
             }
         }
 
@@ -124,11 +125,11 @@ fun FirebaseAuthScreen(navController: NavController) {
 
         when (val user = currentUser) {
             null -> {
-                Text(text = "Aucun utilisateur connecté", style = MaterialTheme.typography.bodyLarge)
+                Text(text = context.getString(R.string.user_not_connected), style = MaterialTheme.typography.bodyLarge)
             }
             else -> {
-                Text(text = "Email : ${user.email ?: "Inconnu"}", style = MaterialTheme.typography.bodyLarge)
-                Text(text = "UID : ${user.uid ?: "Inconnu"}", style = MaterialTheme.typography.bodyLarge)
+                Text(text = "Email : ${user.email ?: "-"}", style = MaterialTheme.typography.bodyLarge)
+                Text(text = "UID : ${user.uid ?: "-"}", style = MaterialTheme.typography.bodyLarge)
             }
         }
     }

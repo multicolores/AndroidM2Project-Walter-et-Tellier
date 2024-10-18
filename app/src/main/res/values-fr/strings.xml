@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">My Application</string>
+    <string name="log_in_button">Connexion</string>
+    <string name="see_card_button">Voir les cartes</string>
+    <string name="added_date">Date d\'ajout</string>
+    <string name="authentification_title">Authentification</string>
+    <string name="register_button">inscription</string>
+    <string name="login_button">connexion</string>
+    <string name="logout_button">déconnexion</string>
+    <string name="and">et</string>
+    <string name="home_page_text">Project Android Master 2 avec l\'API Yu-Gi_Oh</string>
+    <string name="already_connected">Déjà connecté</string>
+    <string name="password">Mot de passe</string>
+    <string name="field_empty_error">Au moins 1 champ est vide</string>
+    <string name="user_not_connected">Utilisateur non connecté</string>
+    <string name="cards_title">Cartes</string>
+    <string name="add">Ajouter</string>
+    <string name="remove">Supprimer</string>
+    <string name="level">niveau</string>
+    <string name="total_number_of_cards">Nombre total de cartes</string>
 </resources>

@@ -12,6 +12,8 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -21,8 +23,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
+import com.example.myapplication.R
+import com.example.myapplication.firebase.viewmodel.FirebaseAuthViewModel
 import com.example.myapplication.ui.theme.MyApplicationTheme
 
 @Composable
@@ -30,6 +35,10 @@ fun MainScreen(
     onButtonClick: () -> Unit,
     onButtonClick2: () -> Unit,
     ) {
+    val authViewModel: FirebaseAuthViewModel = viewModel()
+    val currentUser by authViewModel.mCurrentUser.observeAsState()
+    val context = LocalContext.current
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -42,22 +51,34 @@ fun MainScreen(
             verticalArrangement = Arrangement.spacedBy(15.dp),
         ) {
             Text(
-                text = "Florian TELLIER Et Maxence WALTER",
+                text = "Florian TELLIER ${context.getString(R.string.and)} Maxence WALTER",
                 color = MaterialTheme.colorScheme.secondary,
                 modifier = Modifier.padding(8.dp),
                 fontWeight = FontWeight.Bold,
                 fontSize = 30.sp
             )
-            Text(text = "Projet Android Master 2 avec API Yu-Gi-Oh", textAlign = TextAlign.Center)
+            Text(text = "${context.getString(R.string.home_page_text)} Yu-Gi-Oh", textAlign = TextAlign.Center)
+            when (val userEmail = currentUser?.email) {
+                null -> {
+                    Button(
+                        modifier = Modifier.fillMaxWidth(),
+                        content ={ Text(context.getString(R.string.log_in_button)) },
+                        colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
+                        onClick = { onButtonClick() }
+                    )                }
+                else -> {
+                    Button(
+                        modifier = Modifier.fillMaxWidth(),
+                        content ={ Text(context.getString(R.string.already_connected) + " - "+ userEmail) },
+                        colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
+                        onClick = { onButtonClick() }
+                    )
+                }
+            }
+
             Button(
                 modifier = Modifier.fillMaxWidth(),
-                content = { Text("Connexion") },
-                colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
-                onClick = { onButtonClick() }
-            )
-            Button(
-                modifier = Modifier.fillMaxWidth(),
-                content = { Text("Voir carte YuGiOh !") },
+                content = { Text(context.getString(R.string.see_card_button)) },
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
                 onClick = { onButtonClick2() }
             )
