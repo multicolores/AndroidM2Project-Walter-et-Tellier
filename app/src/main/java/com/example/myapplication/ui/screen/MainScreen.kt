@@ -58,24 +58,21 @@ fun MainScreen(
                 fontSize = 30.sp
             )
             Text(text = "${context.getString(R.string.home_page_text)} Yu-Gi-Oh", textAlign = TextAlign.Center)
-            when (val userEmail = currentUser?.email) {
-                null -> {
-                    Button(
-                        modifier = Modifier.fillMaxWidth(),
-                        content ={ Text(context.getString(R.string.log_in_button)) },
-                        colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
-                        onClick = { onButtonClick() }
-                    )                }
-                else -> {
-                    Button(
-                        modifier = Modifier.fillMaxWidth(),
-                        content ={ Text(context.getString(R.string.already_connected) + " - "+ userEmail) },
-                        colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
-                        onClick = { onButtonClick() }
-                    )
-                }
+            if (currentUser == null) {
+                Button(
+                    modifier = Modifier.fillMaxWidth(),
+                    content = { Text(context.getString(R.string.log_in_button)) },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
+                    onClick = { onButtonClick() }
+                )
+            } else {
+                Button(
+                    modifier = Modifier.fillMaxWidth(),
+                    content = { Text(context.getString(R.string.already_connected) + " - " + currentUser?.email) },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
+                    onClick = { onButtonClick() }
+                )
             }
-
             Button(
                 modifier = Modifier.fillMaxWidth(),
                 content = { Text(context.getString(R.string.see_card_button)) },

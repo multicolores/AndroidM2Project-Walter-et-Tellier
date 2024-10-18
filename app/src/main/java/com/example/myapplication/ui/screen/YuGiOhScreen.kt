@@ -42,6 +42,9 @@ import coil.request.ImageRequest
 import com.example.myapplication.R
 import com.example.myapplication.ui.model.ItemUi
 import com.example.myapplication.ui.viewModel.YuGiOhViewModel
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -52,6 +55,16 @@ fun YuGiOhScreen(navController: NavController) {
 
     fun showToast(context: Context, message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
+
+    fun formatTimestamp(timestamp: String): String {
+        return try {
+            val timestampLong = timestamp.toLong()
+            val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
+            dateFormat.format(Date(timestampLong))
+        } catch (e: NumberFormatException) {
+            "Date invalide"
+        }
     }
 
     Scaffold(
@@ -183,7 +196,7 @@ fun YuGiOhScreen(navController: NavController) {
                                 }
 
                                 Text(
-                                    text =  context.getString(R.string.added_date) + ": ${item.current_timestamp}",
+                                    text =  context.getString(R.string.added_date) + ": ${formatTimestamp(item.current_timestamp)}",
                                     color = Color.Gray,
                                     fontSize = 12.sp
                                 )
@@ -207,6 +220,7 @@ fun YuGiOhScreen(navController: NavController) {
                                     text =  context.getString(R.string.total_number_of_cards) +": ${item.numberOfElements}",
                                     style = MaterialTheme.typography.titleMedium,
                                     color = Color.White,
+                                    fontSize = 12.sp
                                 )
                             }
                         }
