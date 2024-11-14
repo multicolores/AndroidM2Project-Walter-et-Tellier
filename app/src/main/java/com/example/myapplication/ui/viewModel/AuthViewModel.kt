@@ -1,4 +1,4 @@
-package com.example.myapplication.firebase.viewmodel
+package com.example.myapplication.ui.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.myapplication.firebase.repository.FirebaseAuthRepository
 import com.google.firebase.auth.FirebaseUser
 
-class FirebaseAuthViewModel : ViewModel() {
+class AuthViewModel : ViewModel() {
     private val mFirebaseAuthRepository: FirebaseAuthRepository by lazy { FirebaseAuthRepository() }
     var mCurrentUser = MutableLiveData<FirebaseUser?>()
     var mErrorProcess = MutableLiveData<Int>()

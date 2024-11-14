@@ -1,16 +1,13 @@
-package com.example.myapplication.firebase.screen
+package com.example.myapplication.ui.screen
 
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -22,11 +19,11 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.myapplication.R
-import com.example.myapplication.firebase.viewmodel.FirebaseAuthViewModel
+import com.example.myapplication.ui.viewModel.AuthViewModel
 
 @Composable
-fun FirebaseAuthScreen(navController: NavController) {
-    val mViewModel: FirebaseAuthViewModel = viewModel()
+fun AuthScreen(navController: NavController) {
+    val mViewModel: AuthViewModel = viewModel()
     val currentUser by mViewModel.mCurrentUser.observeAsState()
     val errorProcess by mViewModel.mErrorProcess.observeAsState(0)
     var email by remember { mutableStateOf("") }

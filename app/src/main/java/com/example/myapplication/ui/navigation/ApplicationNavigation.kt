@@ -7,7 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.myapplication.firebase.screen.FirebaseAuthScreen
+import com.example.myapplication.ui.screen.AuthScreen
 import com.example.myapplication.ui.screen.MainScreen
 import com.example.myapplication.ui.screen.YuGiOhScreen
 
@@ -40,7 +40,7 @@ fun NavGraphBuilder.addAuthScreenNavigation(navController: NavController) {
     composable(
         route = NavigationPath.AUTH_SCREEN,
     ) {
-        FirebaseAuthScreen(navController)
+        AuthScreen(navController)
     }
 }
 

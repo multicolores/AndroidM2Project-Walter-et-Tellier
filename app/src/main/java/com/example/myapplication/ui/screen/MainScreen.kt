@@ -27,7 +27,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.example.myapplication.R
-import com.example.myapplication.firebase.viewmodel.FirebaseAuthViewModel
+import com.example.myapplication.ui.viewModel.AuthViewModel
 import com.example.myapplication.ui.theme.MyApplicationTheme
 
 @Composable
@@ -35,7 +35,7 @@ fun MainScreen(
     onButtonClick: () -> Unit,
     onButtonClick2: () -> Unit,
     ) {
-    val authViewModel: FirebaseAuthViewModel = viewModel()
+    val authViewModel: AuthViewModel = viewModel()
     val currentUser by authViewModel.currentUser.observeAsState()
     val context = LocalContext.current
 
