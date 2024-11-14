@@ -11,7 +11,7 @@
     <string name="home_page_text">Android Master 2 Project with Yu-Gi_Oh API</string>
     <string name="already_connected">Already connected</string>
     <string name="password">Password</string>
-    <string name="field_empty_error">At least 1 field is empty</string>
+    <string name="field_empty_error">At least 1 field is empty or bad formated</string>
     <string name="user_not_connected">User not connected</string>
     <string name="cards_title">YuGiOh Cards</string>
     <string name="add">Add</string>

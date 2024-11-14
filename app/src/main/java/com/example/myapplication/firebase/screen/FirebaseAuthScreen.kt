@@ -61,7 +61,7 @@ fun FirebaseAuthScreen(navController: NavController) {
         Text(
             text = context.getString(R.string.authentification_title),
             style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier.padding(bottom = 24.dp) // Espace avant le titre
+            modifier = Modifier.padding(bottom = 24.dp)
         )
 
         TextField(
@@ -70,7 +70,7 @@ fun FirebaseAuthScreen(navController: NavController) {
             label = { Text("Email") },
             modifier = Modifier.fillMaxWidth(),
         )
-        Spacer(modifier = Modifier.height(16.dp)) // Espace entre les champs
+        Spacer(modifier = Modifier.height(16.dp))
 
         TextField(
             value = password,
@@ -79,7 +79,7 @@ fun FirebaseAuthScreen(navController: NavController) {
             modifier = Modifier.fillMaxWidth(),
             visualTransformation = PasswordVisualTransformation(),
         )
-        Spacer(modifier = Modifier.height(24.dp)) // Espace entre le champ et les boutons
+        Spacer(modifier = Modifier.height(24.dp))
 
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -135,5 +135,6 @@ fun FirebaseAuthScreen(navController: NavController) {
     }
 }
 fun checkConformityFields(email: String, password: String): Boolean {
-    return email.isNotEmpty() && password.isNotEmpty()
+    val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+".toRegex()
+    return email.isNotEmpty() && password.isNotEmpty() && email.matches(emailPattern)
 }

@@ -36,7 +36,7 @@ fun MainScreen(
     onButtonClick2: () -> Unit,
     ) {
     val authViewModel: FirebaseAuthViewModel = viewModel()
-    val currentUser by authViewModel.mCurrentUser.observeAsState()
+    val currentUser by authViewModel.currentUser.observeAsState()
     val context = LocalContext.current
 
     Column(
@@ -89,7 +89,7 @@ fun MainScreen(
         Image(
             modifier = Modifier.size(400.dp),
             painter = painter,
-            contentDescription = "Image d'illustration d'une salle de sport",
+            contentDescription = "Yu gi oh logo",
         )
     }
 

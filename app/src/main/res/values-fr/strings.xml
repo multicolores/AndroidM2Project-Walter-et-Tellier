@@ -12,7 +12,7 @@
     <string name="home_page_text">Project Android Master 2 avec l\'API Yu-Gi_Oh</string>
     <string name="already_connected">Déjà connecté</string>
     <string name="password">Mot de passe</string>
-    <string name="field_empty_error">Au moins 1 champ est vide</string>
+    <string name="field_empty_error">"Au moins 1 champ est vide ou mal formées "</string>
     <string name="user_not_connected">Utilisateur non connecté</string>
     <string name="cards_title">Cartes</string>
     <string name="add">Ajouter</string>

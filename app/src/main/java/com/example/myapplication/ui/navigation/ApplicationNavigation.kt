@@ -40,7 +40,6 @@ fun NavGraphBuilder.addAuthScreenNavigation(navController: NavController) {
     composable(
         route = NavigationPath.AUTH_SCREEN,
     ) {
-       // TODO - auth sreen with check on if register or not AuthScreen(navController)
         FirebaseAuthScreen(navController)
     }
 }
