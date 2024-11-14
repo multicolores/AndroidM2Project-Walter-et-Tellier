@@ -9,7 +9,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,8 +23,8 @@ import com.example.myapplication.ui.viewModel.AuthViewModel
 @Composable
 fun AuthScreen(navController: NavController) {
     val mViewModel: AuthViewModel = viewModel()
-    val currentUser by mViewModel.mCurrentUser.observeAsState()
-    val errorProcess by mViewModel.mErrorProcess.observeAsState(0)
+    val currentUser by mViewModel.currentUser.collectAsState()
+    val errorProcess by mViewModel.errorProcess.collectAsState(0)
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     val context = LocalContext.current
@@ -46,7 +45,6 @@ fun AuthScreen(navController: NavController) {
             showToast(context, errorMessage)
         }
     }
-
 
     Column(
         modifier = Modifier
@@ -72,7 +70,7 @@ fun AuthScreen(navController: NavController) {
         TextField(
             value = password,
             onValueChange = { password = it },
-            label = { Text(context.getString(R.string.password),) },
+            label = { Text(context.getString(R.string.password)) },
             modifier = Modifier.fillMaxWidth(),
             visualTransformation = PasswordVisualTransformation(),
         )
@@ -87,12 +85,12 @@ fun AuthScreen(navController: NavController) {
                     if (checkConformityFields(email, password)) {
                         mViewModel.registerNewUser(email, password)
                     } else {
-                        showToast(context, context.getString(R.string.field_empty_error),)
+                        showToast(context, context.getString(R.string.field_empty_error))
                     }
                 },
-                colors = ButtonDefaults.buttonColors(containerColor = Color.Black))
-            {
-                Text(context.getString(R.string.register_button),)
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
+            ) {
+                Text(context.getString(R.string.register_button))
             }
 
             Button(
@@ -100,12 +98,12 @@ fun AuthScreen(navController: NavController) {
                     if (checkConformityFields(email, password)) {
                         mViewModel.loginUser(email, password)
                     } else {
-                        showToast(context, context.getString(R.string.field_empty_error),)
+                        showToast(context, context.getString(R.string.field_empty_error))
                     }
                 },
-                colors = ButtonDefaults.buttonColors(containerColor = Color.Black))
-            {
-                Text(context.getString(R.string.log_in_button),)
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
+            ) {
+                Text(context.getString(R.string.log_in_button))
             }
 
             Button(
@@ -114,7 +112,7 @@ fun AuthScreen(navController: NavController) {
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
             ) {
-                Text(context.getString(R.string.logout_button),)
+                Text(context.getString(R.string.logout_button))
             }
         }
 
